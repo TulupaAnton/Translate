@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Исправление раскладки</title>
+    <style>
+      /* Основной фон */
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        padding: 20px;
+      }
+
+      /* Контейнер */
+      .container {
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        padding: 40px;
+        width: 100%;
+        max-width: 600px;
+        text-align: center;
+        animation: fadeIn 1s ease;
+      }
+
+      /* Заголовок */
+      h1 {
+        margin-bottom: 20px;
+        font-size: 26px;
+        color: #333;
+      }
+
+      /* Текстовое поле */
+      textarea {
+        width: 100%;
+        height: 100px;
+        border: none;
+        outline: none;
+        border-radius: 12px;
+        padding: 15px;
+        font-size: 16px;
+        background: #f5f5f5;
+        transition: 0.3s;
+        resize: none;
+      }
+
+      textarea:focus {
+        background: #eef2ff;
+        box-shadow: 0 0 0 3px #667eea55;
+      }
+
+      /* Кнопка */
+      button {
+        margin-top: 20px;
+        padding: 12px 25px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+
+      button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Результат */
+      .output {
+        margin-top: 25px;
+        font-size: 20px;
+        font-weight: 500;
+        padding: 15px;
+        background: #f9f9f9;
+        border-radius: 12px;
+        box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.1);
+        min-height: 50px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        animation: fadeIn 0.5s ease;
+      }
+
+      /* Анимация появления */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🔤 Исправление раскладки</h1>
+      <textarea
+        id="input"
+        placeholder="Введи текст в неправильной раскладке..."
+      ></textarea>
+      <br />
+      <button onclick="convert()">✨ Преобразовать</button>
+      <div class="output" id="output"></div>
+    </div>
+
+    <script>
+      const layout = {
+        q: 'й',
+        w: 'ц',
+        e: 'у',
+        r: 'к',
+        t: 'е',
+        y: 'н',
+        u: 'г',
+        i: 'ш',
+        o: 'щ',
+        p: 'з',
+        '[': 'х',
+        ']': 'ъ',
+        a: 'ф',
+        s: 'ы',
+        d: 'в',
+        f: 'а',
+        g: 'п',
+        h: 'р',
+        j: 'о',
+        k: 'л',
+        l: 'д',
+        ';': 'ж',
+        "'": 'э',
+        z: 'я',
+        x: 'ч',
+        c: 'с',
+        v: 'м',
+        b: 'и',
+        n: 'т',
+        m: 'ь',
+        ',': 'б',
+        '.': 'ю',
+        '/': '.'
+      }
+
+      function convert() {
+        const input = document.getElementById('input').value
+        let result = ''
+        for (let char of input) {
+          const lower = char.toLowerCase()
+          if (layout[lower]) {
+            result +=
+              char === lower ? layout[lower] : layout[lower].toUpperCase()
+          } else {
+            result += char
+          }
+        }
+        document.getElementById('output').innerText = result
+      }
+    </script>
+  </body>
+</html>
