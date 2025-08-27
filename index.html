@@ -2,9 +2,19 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <title>Исправление раскладки</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Исправление раскладки клавиатуры</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <style>
-      /* Основной фон */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
       body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         background: linear-gradient(135deg, #667eea, #764ba2);
@@ -12,105 +22,317 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin: 0;
         padding: 20px;
+        line-height: 1.6;
       }
 
-      /* Контейнер */
       .container {
         background: #ffffff;
         border-radius: 20px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-        padding: 40px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        padding: 30px;
         width: 100%;
         max-width: 600px;
         text-align: center;
-        animation: fadeIn 1s ease;
+        animation: fadeIn 0.8s ease;
       }
 
-      /* Заголовок */
+      .header {
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+      }
+
       h1 {
-        margin-bottom: 20px;
-        font-size: 26px;
+        font-size: 28px;
         color: #333;
+        font-weight: 700;
       }
 
-      /* Текстовое поле */
+      .icon {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 22px;
+      }
+
+      .input-container {
+        position: relative;
+        margin-bottom: 20px;
+      }
+
       textarea {
         width: 100%;
-        height: 100px;
-        border: none;
+        height: 120px;
+        border: 2px solid #e0e0e0;
         outline: none;
         border-radius: 12px;
         padding: 15px;
         font-size: 16px;
-        background: #f5f5f5;
-        transition: 0.3s;
+        background: #f9f9f9;
+        transition: all 0.3s;
         resize: none;
+        font-family: inherit;
       }
 
       textarea:focus {
-        background: #eef2ff;
-        box-shadow: 0 0 0 3px #667eea55;
+        border-color: #667eea;
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
       }
 
-      /* Кнопка */
+      .clear-btn {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+        background: #f5f5f5;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: #888;
+        transition: all 0.2s;
+      }
+
+      .clear-btn:hover {
+        background: #eee;
+        color: #ff4757;
+      }
+
+      .btn-container {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
       button {
-        margin-top: 20px;
-        padding: 12px 25px;
+        padding: 14px 28px;
         font-size: 16px;
-        font-weight: bold;
+        font-weight: 600;
         border: none;
         border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .convert-btn {
         background: linear-gradient(135deg, #667eea, #764ba2);
         color: white;
-        cursor: pointer;
-        transition: transform 0.2s, box-shadow 0.2s;
+        flex: 1;
       }
 
-      button:hover {
-        transform: scale(1.05);
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      .convert-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 7px 15px rgba(102, 126, 234, 0.4);
       }
 
-      /* Результат */
+      .copy-btn {
+        background: #f1f2f6;
+        color: #333;
+      }
+
+      .copy-btn:hover {
+        background: #e0e0e0;
+      }
+
+      .output-container {
+        margin-top: 30px;
+        position: relative;
+      }
+
+      .output-label {
+        text-align: left;
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
       .output {
-        margin-top: 25px;
-        font-size: 20px;
+        font-size: 18px;
         font-weight: 500;
-        padding: 15px;
+        padding: 20px;
         background: #f9f9f9;
         border-radius: 12px;
-        box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.1);
-        min-height: 50px;
+        box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.08);
+        min-height: 120px;
+        text-align: left;
         white-space: pre-wrap;
         word-wrap: break-word;
-        animation: fadeIn 0.5s ease;
+        border: 2px solid #eee;
       }
 
-      /* Анимация появления */
+      .hint {
+        margin-top: 20px;
+        padding: 12px 15px;
+        background: #f0f5ff;
+        border-radius: 10px;
+        font-size: 14px;
+        color: #667eea;
+        text-align: left;
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .hint i {
+        font-size: 16px;
+        margin-top: 2px;
+      }
+
+      /* Анимации */
       @keyframes fadeIn {
         from {
           opacity: 0;
-          transform: translateY(10px);
+          transform: translateY(15px);
         }
         to {
           opacity: 1;
           transform: translateY(0);
         }
       }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .pulse {
+        animation: pulse 0.5s ease;
+      }
+
+      /* Адаптивность для мобильных устройств */
+      @media (max-width: 600px) {
+        .container {
+          padding: 25px 20px;
+          border-radius: 16px;
+        }
+
+        h1 {
+          font-size: 24px;
+        }
+
+        .header {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .icon {
+          width: 45px;
+          height: 45px;
+          font-size: 20px;
+        }
+
+        textarea {
+          height: 100px;
+          font-size: 15px;
+        }
+
+        button {
+          padding: 12px 20px;
+          font-size: 15px;
+          width: 100%;
+        }
+
+        .btn-container {
+          flex-direction: column;
+        }
+
+        .output {
+          font-size: 16px;
+          padding: 15px;
+          min-height: 100px;
+        }
+
+        .hint {
+          font-size: 13px;
+        }
+      }
+
+      @media (max-width: 400px) {
+        h1 {
+          font-size: 22px;
+        }
+
+        .icon {
+          width: 40px;
+          height: 40px;
+        }
+      }
     </style>
   </head>
   <body>
     <div class="container">
-      <h1>🔤 Исправление раскладки</h1>
-      <textarea
-        id="input"
-        placeholder="Введи текст в неправильной раскладке..."
-      ></textarea>
-      <br />
-      <button onclick="convert()">✨ Преобразовать</button>
-      <div class="output" id="output"></div>
+      <div class="header">
+        <div class="icon">
+          <i class="fas fa-keyboard"></i>
+        </div>
+        <h1>Исправление раскладки клавиатуры</h1>
+      </div>
+
+      <div class="input-container">
+        <textarea
+          id="input"
+          placeholder="Введите текст на английской раскладке, который должен быть на русской..."
+        ></textarea>
+        <button class="clear-btn" id="clear-btn">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="btn-container">
+        <button class="convert-btn" onclick="convert()">
+          <i class="fas fa-magic"></i>
+          Преобразовать
+        </button>
+        <button class="copy-btn" id="copy-btn">
+          <i class="far fa-copy"></i>
+          Копировать
+        </button>
+      </div>
+
+      <div class="output-container">
+        <div class="output-label">
+          <i class="fas fa-arrow-down"></i>
+          Результат:
+        </div>
+        <div class="output" id="output">
+          Здесь появится преобразованный текст...
+        </div>
+      </div>
+
+      <div class="hint">
+        <i class="fas fa-lightbulb"></i>
+        <div>
+          Просто введите текст, набранный в неправильной раскладке (например,
+          "ghbdtn" превратится в "привет") и нажмите "Преобразовать".
+        </div>
+      </div>
     </div>
 
     <script>
@@ -138,6 +360,7 @@
         l: 'д',
         ';': 'ж',
         "'": 'э',
+        '`': 'ё',
         z: 'я',
         x: 'ч',
         c: 'с',
@@ -147,12 +370,23 @@
         m: 'ь',
         ',': 'б',
         '.': 'ю',
-        '/': '.'
+        '/': '.',
+        '&': '?',
+        '<': 'б',
+        '>': 'ю',
+        '?': ',',
+        '~': 'Ё',
+        '@': '"',
+        '#': '№',
+        $: ';',
+        '^': ':',
+        '&': '?'
       }
 
       function convert() {
         const input = document.getElementById('input').value
         let result = ''
+
         for (let char of input) {
           const lower = char.toLowerCase()
           if (layout[lower]) {
@@ -162,8 +396,55 @@
             result += char
           }
         }
-        document.getElementById('output').innerText = result
+
+        const outputElement = document.getElementById('output')
+        outputElement.innerText =
+          result || 'Здесь появится преобразованный текст...'
+
+        if (result) {
+          outputElement.classList.add('pulse')
+          setTimeout(() => outputElement.classList.remove('pulse'), 500)
+        }
       }
+
+      // Очистка поля ввода
+      document
+        .getElementById('clear-btn')
+        .addEventListener('click', function () {
+          document.getElementById('input').value = ''
+          document.getElementById('input').focus()
+        })
+
+      // Копирование результата
+      document
+        .getElementById('copy-btn')
+        .addEventListener('click', function () {
+          const outputText = document.getElementById('output').innerText
+          if (
+            outputText &&
+            outputText !== 'Здесь появится преобразованный текст...'
+          ) {
+            navigator.clipboard.writeText(outputText).then(() => {
+              const originalText = this.innerHTML
+              this.innerHTML = '<i class="fas fa-check"></i> Скопировано!'
+              setTimeout(() => {
+                this.innerHTML = originalText
+              }, 2000)
+            })
+          }
+        })
+
+      // Обработка нажатия Enter в текстовом поле
+      document
+        .getElementById('input')
+        .addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+            convert()
+          }
+        })
+
+      // Автофокус на поле ввода при загрузке
+      document.getElementById('input').focus()
     </script>
   </body>
 </html>
